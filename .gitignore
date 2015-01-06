@@ -1,0 +1,8 @@
+docs*
+Makefile
+build*
+*.pro*
+nbproject*
+CMakeList.txt
+.kdev4*
+*~
