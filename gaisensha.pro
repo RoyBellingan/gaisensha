@@ -13,11 +13,19 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    classes.cpp
+    src/affiliate.cpp \
+    src/funkz.cpp \
+    src/bid_offer.cpp \
+    src/bit_power.cpp \
+    src/campaign.cpp
 
 LIBS += `mysql_config --cflags --libs` -lfcgi++ -lfcgi -lhiredis
 
-HEADERS +=
+HEADERS += \
+    src/affiliate.h \
+    src/bid_offer.h \
+    src/bit_power.h \
+    src/campaign.h
 
 #INCLUDEPATH += "/mnt/neuhome/home/roy/scaricati/gtest-1.7.0/include/"
 #LIBS += -L/mnt/neuhome/home/roy/scaricati/gtest-1.7.0/lib/.libs/ -lgtest_main -lgtest
