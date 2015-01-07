@@ -10,19 +10,6 @@ bit_power::~bit_power()
 
 }
 
-template <typename Enumeration>
-auto bit_power::set(Enumeration const x) -> typename std::underlying_type<Enumeration>::type{
-       mask.setBit(as_integer(x));
-       return 1;
-}
-
-template <typename Enumeration>
-auto bit_power::clear(Enumeration const x) -> typename std::underlying_type<Enumeration>::type{
-           mask.clearBit (as_integer(x));
-           return 0;
-}
-
-
 
 /**
  * @brief toInt return the corresponding value if the bitmask is less than 64 bit

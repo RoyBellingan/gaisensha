@@ -3,6 +3,6 @@ Makefile
 build*
 *.pro*
 nbproject*
-CMakeList.txt
-.kdev4*
+CMakeLists.txt
+*.kdev4
 *~

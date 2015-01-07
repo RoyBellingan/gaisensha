@@ -104,7 +104,7 @@ protected:
 };
 
 int main(int argc, char *argv[]) {
-    /*
+
     bit_power tx=bit_power(4);
     tx.set(bit_power::trait::uno);
     tx.set(bit_power::trait::due);
@@ -112,8 +112,14 @@ int main(int argc, char *argv[]) {
     //tx.set(bit_power::trait::miao);
 
     uint x1 = tx.toInt ();
-*/
 
+    bool z = tx. bit_power::trait::due;
+
+    if (tx == bit_power::trait::due){
+        return 7;
+    }
+
+return x1;
 
     campaign_status cs =campaign_status();
     cs.set(campaign_status::trait::Active_auto);
