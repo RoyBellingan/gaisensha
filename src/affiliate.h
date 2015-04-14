@@ -5,9 +5,9 @@
 
 class affiliate_setting : public bit_power{
 public:
-    affiliate_setting() : bit_power(6){
-        trait_txt = {"Subscribed_to_Newsletters", "Monthly_Resume", "Weekly_Resume","SubAffiliate_Inscription","NewCommission","DisplayOk"};
-    }
+    std::vector<const char*>& trait_h() { return trait_txt; }
+    static std::vector<const char*> trait_txt;
+    affiliate_setting();
     enum class trait {
         Subscribed_to_Newsletters = 0,
         Monthly_Resume,
@@ -18,18 +18,19 @@ public:
     };
 };
 
-class affiliate
-{
+class affiliate_class{
 public:
-    uint id_x;
+    u_int32_t id_x;
     QString id;
     QString uid_sugar;
-    QString name;
-    u_int status;
+    //QString name;
+    u_int8_t status;
     affiliate_setting settings;
 
-    affiliate();
-    ~affiliate();
+    bool display_enabled();
+
+    affiliate_class();
+    ~affiliate_class();
 };
 
 #endif // AFFILIATE_H

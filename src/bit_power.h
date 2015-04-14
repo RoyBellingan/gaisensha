@@ -13,7 +13,10 @@ class bit_power{
 public:
 
     QBitArray mask;
-    std::vector<const char*> trait_txt;
+    //this the vector who holds the string mapping, is static to avoid memory wasting ecc
+    static std::vector<const char*> trait_txt;
+    //this function is used so the inherited class access the redefined trait_txt insted of the base one, or does other strange stuff
+    virtual std::vector<const char*>& trait_h() = 0;
     int val;
     enum class trait {
         uno,

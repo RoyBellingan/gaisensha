@@ -10,6 +10,8 @@
 class campaign_status : public bit_power{
 public:
     campaign_status();
+    static std::vector<const char*> trait_txt;
+    std::vector<const char*>& trait_h() { return trait_txt; }
     enum class trait {
         Pending = 0,
         Active_auto = 1,
@@ -32,6 +34,8 @@ public:
 class campaign_type : public bit_power{
 public:
     campaign_type();
+    static std::vector<const char*> trait_txt;
+    std::vector<const char*>& trait_h() { return trait_txt; }
     enum class trait {
         PPA = 0,
         PPC = 1,
@@ -50,11 +54,11 @@ public:
 
 
 class campaign {
+public:
     uint id_x;
     QString id;
     campaign_status status;
     campaign_type type;
-
 
 };
 

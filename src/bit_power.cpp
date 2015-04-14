@@ -1,12 +1,14 @@
 #include "bit_power.h"
-
+#include <QDebug>
 bit_power::bit_power(uint size){
-    trait_txt = {"uno","due"};
+    //trait_txt = {"uno","due"};
     mask.resize(size);
 }
 
-bit_power::~bit_power()
-{
+
+std::vector<const char*> bit_power::trait_txt = {"uno","due"};
+
+bit_power::~bit_power(){
 
 }
 
@@ -36,7 +38,8 @@ QString bit_power::toCsv(char enc) {
     for (int var = 0; var < mask.size(); ++var) {
         if (mask.testBit(var)) {
             tmp.clear();
-            tmp.append(enc2).append(trait_txt[var]).append(enc2);
+
+            tmp.append(enc2).append(trait_h().at (var)).append(enc2);
             csv.append(tmp);
         }
     }
