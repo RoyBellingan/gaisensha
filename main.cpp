@@ -19,7 +19,7 @@
 #include <QDebug>
 
 #include <mysql/mysql.h>
-#include "/usr/local/include/hiredis/hiredis.h"
+#include "/usr/include/hiredis/hiredis.h"
 
 //#include </mnt/neuhome/home/roy/scaricati/gtest-1.7.0/include/gtest/gtest.h>
 #include <src/bit_power.h>
@@ -38,14 +38,10 @@ unsigned int request_count;
 //cache for user stuff...
 
 
-
-
-
 using namespace std;
 
 
 static void *doit(void *a){
-
     int rc;
     FCGX_Request request;
 
@@ -116,7 +112,18 @@ impression imp;
         content.append(set_header_no_cache ());
         content.append("\r\n");
         content.append("richiesta: ").append (QString::number (request_count) + "<br>\n");
+        QHashIterator<QString, QString> i(cookie);
+        while (i.hasNext()) {
+            i.next();
+            content.append(i.key() + " : " + i.value() + "<br>\n");
+        }
+
         //Performance based requires to be selected both group and banner id
+
+
+        //Long list of requestable item here
+
+        //IF an item requires login... well check the login!
 
 
 
