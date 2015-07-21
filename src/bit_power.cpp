@@ -1,32 +1,20 @@
 #include "bit_power.h"
 #include <QDebug>
-bit_power::bit_power(uint size){
-    //trait_txt = {"uno","due"};
-    mask.resize(size);
-}
+#include <src/funkz.h>
 
-
-std::vector<const char*> bit_power::trait_txt = {"uno","due"};
 
 bit_power::~bit_power(){
-
 }
 
-
-/**
- * @brief toInt return the corresponding value if the bitmask is less than 64 bit
- * @return
- */
-uint bit_power::toInt() {
-    uint64_t sum = 0;
-    for (int var = 0; var < mask.size(); ++var) {
-        if (mask.testBit(var)) {
-            sum += 1 << var;
-        }
-    }
-    return sum;
+bit_power::bit_power(){
+    std::unordered_map<uint,const char*> trait_txt;
+    trait_txt[1]="uno";
+    trait_txt[2]="due";
 }
 
+std::unordered_map<uint,const char*> bit_power::trait_list(){
+    //return trait_txt;
+}
 
 QString bit_power::toCsv(char enc) {
     QString enc2 = QString(enc);
@@ -35,11 +23,11 @@ QString bit_power::toCsv(char enc) {
     }
     QString tmp;
     QStringList csv;
-    for (int var = 0; var < mask.size(); ++var) {
-        if (mask.testBit(var)) {
+    for (uint var = 0; var < mask; ++var) {
+        if (check(var)) {
             tmp.clear();
 
-            tmp.append(enc2).append(trait_h().at (var)).append(enc2);
+            tmp.append(enc2).append(trait_list().at (var)).append(enc2);
             csv.append(tmp);
         }
     }
@@ -54,3 +42,8 @@ QString bit_power::toCsv(char enc) {
 QString bit_power::toCsv() {
     return toCsv(' ');
 }
+
+uint bit_power::toInt() {
+    return mask;
+}
+

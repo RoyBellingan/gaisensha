@@ -10,9 +10,9 @@
 class campaign_status : public bit_power{
 public:
     campaign_status();
-    static std::vector<const char*> trait_txt;
-    std::vector<const char*>& trait_h() { return trait_txt; }
-    enum class trait {
+    static std::unordered_map<uint,const char*> trait_txt;
+    std::unordered_map<uint,const char*> trait_list() { }
+    enum trait {
         Pending = 0,
         Active_auto = 1,
         Active_manual = 2,
@@ -26,6 +26,7 @@ public:
 };
 
 
+
 /**
  * @brief The campaign_type enum
  * https://advplace.com/bugme/show_bug.cgi?id=1061
@@ -34,8 +35,8 @@ public:
 class campaign_type : public bit_power{
 public:
     campaign_type();
-    static std::vector<const char*> trait_txt;
-    std::vector<const char*>& trait_h() { return trait_txt; }
+    static std::unordered_map<uint,const char*> trait_txt;
+    std::unordered_map<uint,const char*> trait_list() { }
     enum class trait {
         PPA = 0,
         PPC = 1,
@@ -59,7 +60,12 @@ public:
     QString id;
     campaign_status status;
     campaign_type type;
-
+    enum status {
+        active,
+        paused,
+        hidden,
+        geppetto
+    };
 };
 
 

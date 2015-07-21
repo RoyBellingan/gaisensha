@@ -1,13 +1,25 @@
 #include "src/campaign.h"
 
-campaign_status::campaign_status() : bit_power(8){
-    //trait_txt = {"Pending", "Active_auto","Active_manual", "Hidden","Paused","Inactive","Paused_auto","Paused_manual"};
+campaign_status::campaign_status() : bit_power(){
+
+    std::unordered_map<uint,const char*> trait_txt;
+    trait_txt[1]="Pending";
+    trait_txt[2]="Active_auto";
+    trait_txt[4]="Active_manual";
+    trait_txt[8]="Hidden";
+    trait_txt[16]="Paused";
+    trait_txt[32]="Inactive";
 }
 
-std::vector<const char*> campaign_status::trait_txt={"Pending", "Active_auto","Active_manual", "Hidden","Paused","Inactive","Paused_auto","Paused_manual"};
 
-campaign_type::campaign_type() : bit_power(12){
-   //trait_txt = {"PPA", "PPC", "PPS", "PPL", "PPM", "Bonus", "Coreg", "Referral", "RTB", "Test", "Carlo"};
+campaign_type::campaign_type() : bit_power(){
+    std::unordered_map<uint,const char*> trait_txt;
+    trait_txt[1]="PPA";
+    trait_txt[2]="PPC";
+    trait_txt[4]="PPS";
+    trait_txt[8]="PPL";
+    trait_txt[16]="PPM";
+    trait_txt[32]="Bonus";
 }
-std::vector<const char*>campaign_type::trait_txt = {"PPA", "PPC", "PPS", "PPL", "PPM", "Bonus", "Coreg", "Referral", "RTB", "Test", "Carlo"};
+
 

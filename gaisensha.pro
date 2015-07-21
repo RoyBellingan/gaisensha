@@ -27,7 +27,8 @@ HEADERS += \
     src/bid_offer.h \
     src/bit_power.h \
     src/campaign.h \
-    src/impression.h
+    src/impression.h \
+    src/funkz.h
 
 #INCLUDEPATH += "/mnt/neuhome/home/roy/scaricati/gtest-1.7.0/include/"
 #LIBS += -L/mnt/neuhome/home/roy/scaricati/gtest-1.7.0/lib/.libs/ -lgtest_main -lgtest

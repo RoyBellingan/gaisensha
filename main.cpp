@@ -24,6 +24,7 @@
 //#include </mnt/neuhome/home/roy/scaricati/gtest-1.7.0/include/gtest/gtest.h>
 #include <src/bit_power.h>
 #include <src/campaign.h>
+#include <src/affiliate.h>
 #include <src/funkz.h>
 #include <src/impression.h>
 
@@ -41,11 +42,35 @@ unsigned int request_count;
 using namespace std;
 
 
-static void *doit(void *a){
+int main (){
+    affiliate aff1;
+    aff1.settings.i_set(3);
+    aff1.settings.set(affiliate_setting::DisplayOk);
+
+
+
+    qDebug() << aff1.settings.toCsv();
+    qDebug() << aff1.settings.toInt();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+static void *doit(void *a)
+{
     int rc;
     FCGX_Request request;
 
-    if(FCGX_InitRequest(&request, socketId, 0) != 0){
+    if(FCGX_InitRequest(&request, socketId, 0) != 0) {
         printf("Can not init request\n");
         return NULL;
     }
@@ -55,7 +80,7 @@ static void *doit(void *a){
 
     if (c->err) {
         printf("Error with redis: %s\n", c->errstr);
-    }else{
+    } else {
         //printf("Connection Made! \n");
     }
 
@@ -63,11 +88,11 @@ static void *doit(void *a){
     reply = (redisReply*)redisCommand(c,"PING");
     printf("PING Response: %s\n", reply->str);
 
-impression imp;
+    impression imp;
 
     QString content;
     //loop forever!
-    for(;;){
+    for(;;) {
         content.clear ();
         static pthread_mutex_t accept_mutex = PTHREAD_MUTEX_INITIALIZER;
         //stay here waiting for an accepted connection
@@ -79,39 +104,39 @@ impression imp;
         request_count++;
 
 
-        if(rc < 0){
+        if(rc < 0) {
             printf("Can not accept new request\n");
             break;
         }
 
-        if(check_user_agent( FCGX_GetParam("HTTP_USER_AGENT", request.envp))){
+        if(check_user_agent( FCGX_GetParam("HTTP_USER_AGENT", request.envp))) {
             empty_response();
             continue;
         }
 
         //Just Enought Cookie Handling
-       // penv(request.envp);
+        // penv(request.envp);
         QByteArray cookie_raw= FCGX_GetParam("HTTP_COOKIE", request.envp);
         QHash<QString, QString> cookie;
 
-        foreach(QByteArray line, cookie_raw.split(';')){
+        foreach(QByteArray line, cookie_raw.split(';')) {
             int colon = line.indexOf('=');
             QByteArray headerName = line.left(colon).trimmed();
             QByteArray headerValue = line.mid(colon + 1).trimmed();
             cookie.insertMulti(headerName, headerValue);
         }
 
+
+
         //Well Enought GET parameter handling
-        QString url= FCGX_GetParam("SCRIPT_URL", request.envp);
+        QString url= FCGX_GetParam("REQUEST_URI", request.envp);
         QUrlQuery query;
         query.setQuery (FCGX_GetParam("QUERY_STRING", request.envp));
 
-
-        
         content.append ("Content-type: text/html\r\n");
         content.append(set_header_no_cache ());
         content.append("\r\n");
-        content.append("richiesta: ").append (QString::number (request_count) + "<br>\n");
+        content.append("richiesta: ").append (QString::number (request_count) + "<br>\n").append(url);
         QHashIterator<QString, QString> i(cookie);
         while (i.hasNext()) {
             i.next();
@@ -127,8 +152,8 @@ impression imp;
 
 
 
-	//Requesting for a banner
-        if((query.queryItemValue ("g").toInt () > 0) && (query.queryItemValue ("bx").toInt () > 0)){
+        //Requesting for a banner
+        if((query.queryItemValue ("g").toInt () > 0) && (query.queryItemValue ("bx").toInt () > 0)) {
             content.append (query.toString ());
             imp.check_group (query.queryItemValue ("g").toInt ());
             imp.check_banner (query.queryItemValue ("bx").toInt ());
@@ -142,13 +167,13 @@ impression imp;
         FCGX_Finish_r(&request);
         continue;
 
-/*
+        /*
 
-        content.append ("Content-type: text/html\r\n\r\n"
-                        "<html> <head> <title>FastCGI Hello! (multi-threaded C, fcgiapp library)</title> </head> \
-                        <body> <h1>FastCGI Hello! (multi-threaded C, fcgiapp library)</h1> </body>\r\n");
+                content.append ("Content-type: text/html\r\n\r\n"
+                                "<html> <head> <title>FastCGI Hello! (multi-threaded C, fcgiapp library)</title> </head> \
+                                <body> <h1>FastCGI Hello! (multi-threaded C, fcgiapp library)</h1> </body>\r\n");
 
-*/
+        */
 
 
     }
@@ -157,8 +182,9 @@ impression imp;
 
 
 
-
-int main(void){
+/*
+int main(void)
+{
     int i;
     pthread_t id[THREAD_COUNT];
 
@@ -166,24 +192,24 @@ int main(void){
     printf("FCGX is inited\n");
     umask(0);
     socketId = FCGX_OpenSocket(SOCKET_PATH, 2000);
-    if(socketId < 0){
+    if(socketId < 0) {
         printf("Socket opening Error \n");
         return 1;
     }
     printf("Socket is opened\n");
 
 
-    for(i = 0; i < THREAD_COUNT; i++){
+    for(i = 0; i < THREAD_COUNT; i++) {
         pthread_create(&id[i], NULL, doit, NULL);
     }
 
-    for(i = 0; i < THREAD_COUNT; i++){
+    for(i = 0; i < THREAD_COUNT; i++) {
         pthread_join(id[i], NULL);
     }
 
     return 0;
 }
-
+*/
 
 
 
